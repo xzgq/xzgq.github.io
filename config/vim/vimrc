@@ -1,0 +1,70 @@
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+set expandtab
+set smartindent
+set cindent
+set copyindent
+set preserveindent
+filetype plugin on
+filetype indent on
+set nocompatible
+syntax on
+
+call plug#begin()
+
+" 核心插件：coc.nvim
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" TagList
+Plug 'vim-scripts/taglist.vim'
+" Plug 'preservim/tagbar'
+" Plug 'davidhalter/jedi-vim'
+" Plug 'jtriley/pyflakes-vim'
+call plug#end()
+
+autocmd FileType sh,zsh,lua set expandtab shiftwidth=2 softtabstop=2 tabstop=2
+autocmd FileType python set expandtab shiftwidth=4 softtabstop=4 tabstop=4
+
+let mapleader = " "
+
+" 临时测试：Tab 永远选择下一个补全项
+" inoremap <expr> <Tab> coc#pum#visible() ? coc#pum#next(1) : "\<Tab>"
+
+" 确保系统能找到 ctags 命令，如果系统里 ctags 路径不同，需要改成你自己的路径 [citation:2][citation:4]
+" let s:Tlist_Ctags_Cmd = expand($PREFIX) . '/usr/bin/ctags'
+
+" 只显示当前正在编辑文件的标签，而不是整个项目的
+let Tlist_Show_One_File = 1
+
+" 如果 Taglist 窗口是最后一个窗口，则自动退出 Vim
+let Tlist_Exit_OnlyWindow = 1
+
+" 设置一个快捷键来快速开关 Taglist 窗口，例如按 F8 键
+nmap <Leader>f :TlistToggle<CR>
+
+" 如果 ctags 不在系统的 PATH 里，可以在这里指定它的路径
+" let g:tagbar_ctags_bin = '/你的/ctags/路径' [citation:3][citation:9]
+
+" 让 Tagbar 窗口显示在左侧（默认在右侧）
+let g:tagbar_left = 1
+
+" 设置 Tagbar 窗口的宽度
+let g:tagbar_width = 30
+
+" 打开 Tagbar 时，光标自动进入 Tagbar 窗口
+let g:tagbar_autofocus = 1
+
+" 设置快捷键，比如按 F8 键就可以快速开关 Tagbar 侧边栏
+nmap <Leader>j :TagbarToggle<CR>
+
+" 当文件类型是 python 时，自动将编译器设置为 pylint
+autocmd FileType python compiler pylint
+" 在保存 .py 文件时，自动执行 :make 命令来运行 Pylint
+" autocmd BufWritePost *.py make %
+nnoremap <Leader>p :make %<CR>
+
+" 保存 .py 文件时，自动更新 ctags 索引并刷新 Taglist
+" 后台更新索引
+autocmd BufWritePost *.py silent! !ctags -R . &
+" 刷新 Taglist
+autocmd BufWritePost *.py TlistUpdate
