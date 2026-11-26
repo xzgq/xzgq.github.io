@@ -6,6 +6,7 @@ set smartindent
 set cindent
 set copyindent
 set preserveindent
+set tags+=./.ctags
 filetype plugin on
 filetype indent on
 set nocompatible
@@ -17,7 +18,7 @@ call plug#begin()
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " TagList
 Plug 'vim-scripts/taglist.vim'
-" Plug 'preservim/tagbar'
+Plug 'preservim/tagbar'
 " Plug 'davidhalter/jedi-vim'
 " Plug 'jtriley/pyflakes-vim'
 call plug#end()
